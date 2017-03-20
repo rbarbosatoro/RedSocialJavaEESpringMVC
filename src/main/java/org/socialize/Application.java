@@ -21,7 +21,7 @@ public class Application implements WebApplicationInitializer {
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
 		AnnotationConfigWebApplicationContext webApplicationContext = new AnnotationConfigWebApplicationContext();
-		webApplicationContext.setConfigLocation("org.empleodigital.config");
+		webApplicationContext.setConfigLocation("org.socialize.config");
 		webApplicationContext.register(ConfigWebSpring.class);
 		
 		Dynamic appServlet = servletContext.addServlet("appServlet", new DispatcherServlet(webApplicationContext));

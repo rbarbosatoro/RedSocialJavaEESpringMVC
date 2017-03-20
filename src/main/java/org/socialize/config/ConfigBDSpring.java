@@ -30,8 +30,8 @@ public class ConfigBDSpring {
 	public DataSource dataSource() throws IllegalStateException, PropertyVetoException {
 		BasicDataSource dataSource = new BasicDataSource();
 	    dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-	    dataSource.setUrl("jdbc:mysql://localhost:3306/javaBiblioteca?createDatabaseIfNotExist=true");
-	    dataSource.setUsername("root");
+	    dataSource.setUrl("jdbc:mysql://localhost:3306/socialNetwork?createDatabaseIfNotExist=true");
+	    dataSource.setUsername("admin");
 	    dataSource.setPassword("");
 	    
 	    return dataSource;
@@ -42,7 +42,7 @@ public class ConfigBDSpring {
 		
 		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 		entityManagerFactoryBean.setDataSource(dataSource());
-		entityManagerFactoryBean.setPackagesToScan("org.empleodigital.domain.entity");
+		entityManagerFactoryBean.setPackagesToScan("org.socialize.domain.entity");
 		entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
 		entityManagerFactoryBean.setJpaDialect(new HibernateJpaDialect());
 		
@@ -75,7 +75,7 @@ public class ConfigBDSpring {
 	    return sessionBuilder.buildSessionFactory(); 
 	}
 	
-	@Bean
+	/*@Bean
     public DataSourceInitializer dataSourceInitializer(DataSource dataSource)
     {
         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
@@ -85,7 +85,7 @@ public class ConfigBDSpring {
         dataSourceInitializer.setDataSource(dataSource);
         dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
         return dataSourceInitializer;
-    }
+    }*/
 
 	
 }
