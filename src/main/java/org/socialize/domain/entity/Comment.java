@@ -1,45 +1,39 @@
 package org.socialize.domain.entity;
 
-import java.util.Set;
-
-import javax.jws.soap.SOAPBinding.Use;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-public class Tweet {
+public class Comment {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
-	@JoinColumn(name="user_id")
-	private User user;
+	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	private User user_id;
 	
-	@ManyToMany(mappedBy="favorite_tweets")
-	private Set<User> users;
+	@ManyToOne(cascade=CascadeType.ALL)
+	private Tweet tweet_id;
 	
 	@NotNull
 	@NotEmpty
 	private String text;
 
-	public Tweet() {
+	public Comment() {
 	}
 	
-	public Tweet(User user, String text) {
-		this.user = user;
+	public Comment(User user_id, Tweet tweet_id, String text) {
+		this.user_id = user_id;
+		this.tweet_id = tweet_id;
 		this.text = text;
 	}
 
@@ -51,20 +45,20 @@ public class Tweet {
 		this.id = id;
 	}
 
-	public Set<User> getUsers() {
-		return users;
+	public User getUser_id() {
+		return user_id;
 	}
 
-	public void setUsers(Set<User> users) {
-		this.users = users;
+	public void setUser_id(User user_id) {
+		this.user_id = user_id;
 	}
 
-	public User getUser() {
-		return user;
+	public Tweet getTweet_id() {
+		return tweet_id;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setTweet_id(Tweet tweet_id) {
+		this.tweet_id = tweet_id;
 	}
 
 	public String getText() {
@@ -81,7 +75,8 @@ public class Tweet {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((text == null) ? 0 : text.hashCode());
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		result = prime * result + ((tweet_id == null) ? 0 : tweet_id.hashCode());
+		result = prime * result + ((user_id == null) ? 0 : user_id.hashCode());
 		return result;
 	}
 
@@ -93,7 +88,7 @@ public class Tweet {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Tweet other = (Tweet) obj;
+		Comment other = (Comment) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -104,11 +99,18 @@ public class Tweet {
 				return false;
 		} else if (!text.equals(other.text))
 			return false;
-		if (user == null) {
-			if (other.user != null)
+		if (tweet_id == null) {
+			if (other.tweet_id != null)
 				return false;
-		} else if (!user.equals(other.user))
+		} else if (!tweet_id.equals(other.tweet_id))
+			return false;
+		if (user_id == null) {
+			if (other.user_id != null)
+				return false;
+		} else if (!user_id.equals(other.user_id))
 			return false;
 		return true;
 	}
+	
+	
 }
